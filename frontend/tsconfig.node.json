@@ -10,10 +10,8 @@
     "skipLibCheck": true,
 
     /* Bundler mode */
-    "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
-    "noEmit": true,
 
     /* Linting */
     "strict": true,
