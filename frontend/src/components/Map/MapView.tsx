@@ -28,10 +28,7 @@ const MapView: React.FC<MapViewProps> = ({
   zoom = 5,
   onMarkerClick
 }) => {
-  const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
-
   const handleMarkerClick = (listing: Listing) => {
-    setSelectedListing(listing);
     if (onMarkerClick) {
       onMarkerClick(listing);
     }

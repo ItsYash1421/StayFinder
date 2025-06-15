@@ -31,8 +31,8 @@ const ListingDetails: React.FC = () => {
   const loadListing = async (listingId: string) => {
     try {
       setLoading(true);
-      const data = await listingsAPI.getListing(listingId);
-      setListing(data);
+      const response = await listingsAPI.getListing(listingId);
+      setListing(response.data);
       setError(null);
     } catch {
       setError('Failed to load listing');
@@ -54,12 +54,15 @@ const ListingDetails: React.FC = () => {
       return;
     }
     try {
+      // Calculate number of nights
+      const nights = Math.max(1, Math.ceil((new Date(checkOut).getTime() - new Date(checkIn).getTime()) / (1000 * 60 * 60 * 24)));
       await bookingsAPI.createBooking({
         listingId: id!,
         checkIn,
         checkOut,
         numberOfGuests,
         specialRequests,
+        totalPrice: listing ? listing.pricePerNight * nights : 0
       });
       setBookingMessage('Booking successful!');
     } catch (err: any) {
@@ -134,7 +137,7 @@ const ListingDetails: React.FC = () => {
             <p className="mt-1 text-gray-700">{listing.description}</p>
           </div>
           <div className="mb-4">
-            <span className="font-semibold">Host:</span> {listing.owner?.name || 'N/A'}
+            <span className="font-semibold">Host:</span> {typeof listing.ownerId === 'object' && listing.ownerId !== null && 'name' in listing.ownerId ? (listing.ownerId as any).name : (listing.ownerId ? String(listing.ownerId) : 'N/A')}
           </div>
         </div>
 
@@ -205,14 +208,14 @@ const ListingDetails: React.FC = () => {
               <div className="flex items-center mb-2">
                 <span className="font-semibold mr-2">{review.user?.name || 'User'}</span>
                 <span className="text-yellow-500">{'★'.repeat(review.rating)}</span>
-                <span className="ml-2 text-gray-400 text-xs">{new Date(review.date).toLocaleDateString()}</span>
+                {/* <span className="ml-2 text-gray-400 text-xs">{new Date(review.date).toLocaleDateString()}</span> */}
               </div>
               <div>{review.comment}</div>
             </div>
           ))}
         </div>
         {/* Add Review */}
-        {user && user.id !== listing.ownerId && (
+        {user && (
           <form onSubmit={handleReview} className="mt-6 bg-white rounded p-4 shadow space-y-3">
             <div>
               <label className="block mb-1">Your Rating</label>
