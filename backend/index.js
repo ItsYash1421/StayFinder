@@ -14,7 +14,7 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin: ['stay-finder-web.vercel.app'],
+  origin: ['https://stay-finder-web.vercel.app/'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
