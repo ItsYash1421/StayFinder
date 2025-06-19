@@ -16,7 +16,7 @@ const app = express();
 const corsOptions = {
   origin: [
     'https://stay-finder-web.vercel.app', // your Vercel frontend
-    'http://localhost:5173'               // local dev
+    'https://stay-finder-web.vercel.app'               // local dev
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
