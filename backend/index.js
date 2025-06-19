@@ -14,7 +14,10 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin: 'stay-finder-7624nztcb-yash-kumar-meenas-projects.vercel.app',
+  origin: [
+    'https://stay-finder-web.vercel.app', // your Vercel frontend
+    'http://localhost:5173'               // local dev
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
